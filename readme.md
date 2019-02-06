@@ -12,6 +12,8 @@ launch `composer install`
 
 ## Usage
 
+Copy the files to the corresponding folders from app/ and complete the following files :
+
 in .env
 
 ```ini
@@ -56,7 +58,7 @@ protected $routeMiddleware = [
 
 ```
 
-Routes exemple
+Routes example
 
 ```php
 Route::get('/webhook', 'EventController@handle')->name('facebook.webhook.verify')->middleware('verifyToken');
