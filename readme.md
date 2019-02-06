@@ -10,6 +10,8 @@
 
 launch `composer install` 
 
+## Usage
+
 in .env
 
 ```ini
@@ -20,5 +22,43 @@ FACEBOOK_VERIFY_TOKEN=                  //Token for subscribe webhook
 FACEBOOK_USER_TOKEN=                    //Long Life facebook user token
 ```
 
-## Usage
+in config/app.php
 
+```php
+
+'providers' => [
+
+...
+
+App\Providers\FacebookServiceProvider::class,
+
+...
+
+],
+
+```
+
+in app/Http/kernel.php
+
+
+```php
+
+protected $routeMiddleware = [
+
+...
+
+'verifyToken' => \App\Http\Middleware\VerifyToken::class,
+'verifySignature' => \App\Http\Middleware\VerifySignature::class,
+
+...
+
+],
+
+```
+
+Routes exemple
+
+```php
+Route::get('/webhook', 'EventController@handle')->name('facebook.webhook.verify')->middleware('verifyToken');
+Route::post('/webhook', 'EventController@handle')->name('facebook.webhook.handle')->middleware('verifySignature');
+```
